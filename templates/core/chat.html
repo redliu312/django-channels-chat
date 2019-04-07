@@ -3,55 +3,99 @@
 
 {% block main %}
 
-    <div class="container">
-        <div class="page-header">
-            <h1>Welcome to ChatApp
-                <small>Pick a user and start chatting!</small>
-            </h1>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div id="user-list" class="list-group">
-                    <a href="" class="list-group-item disabled">
-                        <h4 class="list-group-item-heading">Users</h4>
-                        {# Users go here #}
-                    </a>
-                </div>
+<div class="container">
+    <div class="page-header">
+        <h1>Welcome  and watch youtube together
+            <small>chatting and youtube together. the original repo and the original author is on
+                <a href="https://github.com/narrowfail/django-channels-chat">this Github repository</a>
+                I move this from django channel 1 to channel 2. and add watch youtube for showing websocekt
+                can be using on control webpage. ( first trying to make a onine game, but it seems too hard
+                for me now...
+            </small>
+
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div id="user-list" class="list-group">
+                <a href="" class="list-group-item disabled">
+                    <h4 class="list-group-item-heading">Users</h4>
+                    {# Users go here #}
+                </a>
             </div>
-            <div class="col-md-8">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">Chat</h4>
-                    </div>
-                    <div>
-                        <ul id="messages" class="messages">
-                            {# Messages go here #}
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="input-group">
-                            <input id="chat-input" type="text"
-                                   class="form-control input"
-                                   placeholder="Type your message here ..."
-                                   maxlength="500">
-                            <span class="input-group-btn">
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Chat</h4>
+                </div>
+                <div>
+                    <ul id="messages" class="messages">
+                        {# Messages go here #}
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="chat-input" type="text"
+                               class="form-control input"
+                               placeholder="Type your message here ..."
+                               maxlength="500">
+                        <span class="input-group-btn">
                             <button class="btn btn-info btn"
                                     id="btn-send">
                                 Send</button>
                         </span>
-                        </div>
                     </div>
                 </div>
-
-
             </div>
-        </div>
-    </div>
 
-    <script>
+
+        </div>
+        <div class="col-md-6" >
+            <div id="ytplayer"></div>
+
+            <input id="youtubeurlinput" value="paste youtube url">
+            <button id="myBtn" onclick="changeIfName()">Button</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
         let sessionKey = '{{ request.session.session_key }}';
         let currentUser = '{{ request.user.username }}';
+
+  // Load the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // Replace the 'ytplayer' element with an <iframe> and
+  // YouTube player after the API code downloads.
+  var player;
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+      height: '360',
+      width: '640',
+      videoId: 'M7lc1UVf-VE'
+    } );
+
+    setInterval(test,3000,player);
+  }
+
+  function test(player){
+
+      console.log(player.getCurrentTime());
+
+        console.log(player.getPlayerState());
+
+  }
+
+
+
+
     </script>
-    <script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
 
 {% endblock %}
