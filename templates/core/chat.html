@@ -78,7 +78,12 @@
     player = new YT.Player('ytplayer', {
       height: '360',
       width: '640',
-      videoId: 'M7lc1UVf-VE'
+      videoId: 'M7lc1UVf-VE',
+<!--      events: {-->
+<!--            'onReady': onPlayerReady,-->
+<!--            'onStateChange': onPlayerStateChange-->
+<!--          }-->
+
     } );
 
     setInterval(test,3000,player);

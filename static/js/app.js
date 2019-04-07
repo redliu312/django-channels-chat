@@ -110,53 +110,20 @@ if(ampersandPosition != -1) {
   video_id = video_id.substring(0, ampersandPosition);
 }
 url = "https://www.youtube.com/embed/"+video_id;
-
-    var $if = $('#youtube');
-    if ( $if.length ) {
-        $if.attr('src',url);
-    }
-    return true;
+player.loadVideoById(video_id);
+return true;
 }
 
 
-function ytPlayerLoader(){
-
-    console.log("load yt")
-  // Load the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/player_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // Replace the 'ytplayer' element with an <iframe> and
-  // YouTube player after the API code downloads.
-  var player;
-  function onYouTubePlayerAPIReady() {
-    player = new YT.Player('ytplayer', {
-      height: '360',
-      width: '640',
-      videoId: 'M7lc1UVf-VE'
-    } );
-
-  }
-
-  function test(player){
-
-      console.log(player.getCurrentTime());
-
-
-  }
 
 
 
-}
 
 
 $(document).ready(function () {
     updateUserList();
     disableInput();
-    ytPlayerLoader();
-//    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
+
     var socket = new WebSocket(
         'ws://' + window.location.host +
         '/ws?session_key=${sessionKey}')
@@ -172,6 +139,7 @@ $(document).ready(function () {
             chatInput.val('');
         }
     });
+
 
     socket.onmessage = function (e) {
         getMessageById(e.data);
