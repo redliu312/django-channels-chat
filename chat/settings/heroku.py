@@ -27,7 +27,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ASGI_APPLICATION = "chat.routing.application"
 # Configure Django App for Heroku.
 import django_heroku
 

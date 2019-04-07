@@ -6,9 +6,10 @@ let messageList = $('#messages');
 
 function updateUserList() {
     $.getJSON('api/v1/user/', function (data) {
+        console.log(data)
         userList.children('.user').remove();
         for (let i = 0; i < data.length; i++) {
-            const userItem = `<a class="list-group-item user">${data[i]['username']}</a>`;
+            let userItem = `<a class="list-group-item user" id=${data[i]['id']}>${data[i]['username']}</a>`;
             $(userItem).appendTo('#user-list');
         }
         $('.user').click(function () {
@@ -49,7 +50,12 @@ function getConversation(recipient) {
 
 function getMessageById(message) {
     id = JSON.parse(message).message
+    console.log("message "+id)
+
     $.getJSON(`/api/v1/message/${id}/`, function (data) {
+        console.log("data user"+data.user)
+
+        $(`.list-group-item.user#${data.userid}`).addClass('active')
         if (data.user === currentRecipient ||
             (data.recipient === currentRecipient && data.user == currentUser)) {
             drawMessage(data);
@@ -109,6 +115,8 @@ $(document).ready(function () {
     socket.onmessage = function (e) {
         getMessageById(e.data);
     };
+
+//    setInterval(updateUserList , 3000);
 });
 
 

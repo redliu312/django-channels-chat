@@ -6,6 +6,7 @@ from rest_framework.serializers import ModelSerializer, CharField
 
 class MessageModelSerializer(ModelSerializer):
     user = CharField(source='user.username', read_only=True)
+    userid=CharField(source='user.id',read_only=True)
     recipient = CharField(source='recipient.username')
 
     def create(self, validated_data):
@@ -20,10 +21,10 @@ class MessageModelSerializer(ModelSerializer):
 
     class Meta:
         model = MessageModel
-        fields = ('id', 'user', 'recipient', 'timestamp', 'body')
+        fields = ('id', 'user',"userid", 'recipient', 'timestamp', 'body')
 
 
 class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username','id')
