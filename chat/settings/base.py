@@ -15,14 +15,14 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from os.path import join
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = BASE_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ABC1234'  # TODO Changeme
+SECRET_KEY = 'vdnn=5*tskia%_d%(zna-e0g*=csbi6kjk_y(c-z7427fdg-pw'  # TODO Changeme
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -171,13 +171,7 @@ LOGIN_URL = '/login/'
 
 ALLOWED_HOSTS = ['*']
 
-# Import local_settings.py
-try:
-    from local_settings import *
-except ImportError:
-    pass
 
-ASGI_APPLICATION = 'chat.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

@@ -16,6 +16,7 @@ pytz = "*"
 Django = "==2.0.12"
 Markdown = "==2.6.10"
 django-heroku = "*"
+daphne = "*"
 
 [requires]
 python_version = "3.6"

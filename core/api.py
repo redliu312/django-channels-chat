@@ -6,10 +6,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.authentication import SessionAuthentication
 
-from chat.settings import settings
 from core.serializers import MessageModelSerializer, UserModelSerializer
 from core.models import MessageModel
-
+from django.conf import settings
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     """
