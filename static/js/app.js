@@ -48,8 +48,7 @@ function getConversation(recipient) {
 
 }
 
-function getMessageById(message) {
-    id = JSON.parse(message).message
+function getMessageById(id) {
     console.log("message "+id)
 
     $.getJSON(`/api/v1/message/${id}/`, function (data) {
@@ -65,6 +64,12 @@ function getMessageById(message) {
 }
 
 function sendMessage(recipient, body) {
+    console.log("reci ",recipient)
+    window.socYtdl.send(JSON.stringify(
+                            {"user":currentUser,
+                           "reci":recipient,
+                            "time":0}
+                           ))
     $.post('/api/v1/message/', {
         recipient: recipient,
         body: body
@@ -114,12 +119,6 @@ player.loadVideoById(video_id);
 return true;
 }
 
-
-
-
-
-
-
 $(document).ready(function () {
     updateUserList();
     disableInput();
@@ -127,6 +126,12 @@ $(document).ready(function () {
     var socket = new WebSocket(
         'ws://' + window.location.host +
         '/ws?session_key=${sessionKey}')
+
+    var socketYtdl = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/ytdl?session_key=${sessionKey}')
+
+    window.socYtdl = socketYtdl
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)
@@ -142,10 +147,19 @@ $(document).ready(function () {
 
 
     socket.onmessage = function (e) {
-        getMessageById(e.data);
+
+        id = JSON.parse(e.data).message
+        getMessageById(id);
     };
 
+    socketYtdl.onmessage = e => {
+
+        ytTime = JSON.parse(e.data).ytTime
+        console.log("ytTime ",ytTime)
+
+    }
     });
+
 
 
 

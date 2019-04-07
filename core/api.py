@@ -46,6 +46,7 @@ class MessageModelViewSet(ModelViewSet):
         return super(MessageModelViewSet, self).list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
+
         msg = get_object_or_404(
             self.queryset.filter(Q(recipient=request.user) |
                                  Q(user=request.user),

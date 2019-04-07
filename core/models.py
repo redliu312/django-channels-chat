@@ -36,7 +36,7 @@ class MessageModel(Model):
         """
         notification = {
             'type': 'recieve_group_message',
-            'message': '{}'.format(self.id)
+            'message': str(self.id)
         }
 
         channel_layer = get_channel_layer()
