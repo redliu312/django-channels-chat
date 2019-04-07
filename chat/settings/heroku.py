@@ -14,10 +14,6 @@ DATABASES = {
 }
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
-
 
 
 MIDDLEWARE = [
@@ -30,3 +26,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
+# Configure Django App for Heroku.
+import django_heroku
+
+django_heroku.settings(locals())
