@@ -6,7 +6,6 @@ let messageList = $('#messages');
 
 function updateUserList() {
     $.getJSON('api/v1/user/', function (data) {
-        console.log(data)
         userList.children('.user').remove();
         for (let i = 0; i < data.length; i++) {
             let userItem = `<a class="list-group-item user" id=${data[i]['id']}>${data[i]['username']}</a>`;
@@ -49,10 +48,8 @@ function getConversation(recipient) {
 }
 
 function getMessageById(id) {
-    console.log("message "+id)
 
     $.getJSON(`/api/v1/message/${id}/`, function (data) {
-        console.log("data user"+data.user)
 
         $(`.list-group-item.user#${data.userid}`).addClass('active')
         if (data.user === currentRecipient ||
@@ -64,7 +61,6 @@ function getMessageById(id) {
 }
 
 function sendMessage(recipient, body) {
-    console.log("reci ",recipient)
     window.socYtdl.send(JSON.stringify(
                             {"user":currentUser,
                            "reci":recipient,
@@ -97,27 +93,39 @@ function disableInput() {
 }
 
 
-function changeYoutubeIframeWithInput(){
-    console.log("change");
 
+function passTime(){
+
+    currTime = player.getCurrentTime();
+
+    window.socYtdl.send(JSON.stringify(
+                        {"user":currentUser,
+                       "reci":currentRecipient,
+                        "time":currTime,
+                        "video_id":window.video_id,
+                        "video_state":player.getPlayerState()}
+                       ))
 
 
 }
+
+
+
 
 function changeIfName() {
     inputUrl=$("#youtubeurlinput").val()
-    console.log("change iframe src",inputUrl)
 
 
     var video_id = inputUrl.split('v=')[1];
-var ampersandPosition = video_id.indexOf('&');
-if(ampersandPosition != -1) {
-  video_id = video_id.substring(0, ampersandPosition);
-}
-url = "https://www.youtube.com/embed/"+video_id;
-player.loadVideoById(video_id);
-return true;
-}
+    var ampersandPosition = video_id.indexOf('&');
+    if(ampersandPosition != -1) {
+      video_id = video_id.substring(0, ampersandPosition);
+    }
+    url = "https://www.youtube.com/embed/"+video_id;
+    window.video_id = video_id
+    player.loadVideoById(video_id);
+    return true;
+    }
 
 $(document).ready(function () {
     updateUserList();
@@ -153,13 +161,15 @@ $(document).ready(function () {
     };
 
     socketYtdl.onmessage = e => {
-
+        console("onmessage")
         ytTime = JSON.parse(e.data).ytTime
-        console.log("ytTime ",ytTime)
-
+        video_id = JSON.parse(e.data).video_id
+        video_state = JSON.parse(e.data).video_state
+        player.seekTo(ytTime, true)
+        player.loadVideoById(video_id)
+        player.playVideo()
     }
+
     });
-
-
 
 

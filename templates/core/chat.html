@@ -54,8 +54,9 @@
         <div class="col-md-6" >
             <div id="ytplayer"></div>
 
-            <input id="youtubeurlinput" value="paste youtube url">
-            <button id="myBtn" onclick="changeIfName()">Button</button>
+            <input id="youtubeurlinput"  onfocus="this.value=''" placeholder="paste youtube url">
+            <button id="myBtn" onclick="changeIfName()">Video</button>
+            <button id="thesametime" onclick="passTime()"></button>
         </div>
 
     </div>
@@ -86,7 +87,6 @@
 
     } );
 
-    setInterval(test,3000,player);
   }
 
   function test(player){
