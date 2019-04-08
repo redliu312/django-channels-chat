@@ -5,12 +5,13 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>Welcome  and watch youtube together
-            <small>chatting and youtube together. the original repo and the original author is on
-                <a href="https://github.com/narrowfail/django-channels-chat">this Github repository</a>
-                I move this from django channel 1 to channel 2. and add watch youtube for showing websocekt
-                can be using on control webpage. ( first trying to make a onine game, but it seems too hard
-                for me now...
+        <h1> Watch youtube together....Ya <br>
+            <small>
+
+                一邊看youtube一邊訊息聊天吧  還能按火焰按鍵 讓對方同步妳現在的進度呢
+<!--                I move this from django channel 1 to channel 2. and add watch youtube for showing websocekt-->
+<!--                can be using on control webpage. ( first trying to make a onine game, but it seems too hard-->
+<!--                for me now...-->
             </small>
 
         </h1>
@@ -55,8 +56,10 @@
             <div id="ytplayer"></div>
 
             <input id="youtubeurlinput"  onfocus="this.value=''" placeholder="paste youtube url">
-            <button id="myBtn" onclick="changeIfName()">Video</button>
-            <button id="thesametime" onclick="passTime()"></button>
+            <button id="myBtn" class="fa fa-youtube-play" aria-hidden="true" onclick="changeIfName()"></button>
+            <button class="fa fa-free-code-camp" aria-hidden="true" id="thesametime" onclick="passYtPlayerInfo()"></button>
+
+
         </div>
 
     </div>
@@ -79,13 +82,14 @@
     player = new YT.Player('ytplayer', {
       height: '360',
       width: '640',
-      videoId: 'M7lc1UVf-VE',
+      videoId: 'mwpdffpixBY',
 <!--      events: {-->
 <!--            'onReady': onPlayerReady,-->
 <!--            'onStateChange': onPlayerStateChange-->
 <!--          }-->
 
     } );
+
 
   }
 

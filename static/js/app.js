@@ -75,6 +75,8 @@ function sendMessage(recipient, body) {
 }
 
 function setCurrentRecipient(username) {
+    console.log(typeof(player))
+    window.video_id = player.getVideoData()["video_id"]
     currentRecipient = username;
     getConversation(currentRecipient);
     enableInput();
@@ -94,10 +96,9 @@ function disableInput() {
 
 
 
-function passTime(){
-
+function passYtPlayerInfo(){
+    console.log("send yt player info")
     currTime = player.getCurrentTime();
-
     window.socYtdl.send(JSON.stringify(
                         {"user":currentUser,
                        "reci":currentRecipient,
@@ -131,6 +132,8 @@ $(document).ready(function () {
     updateUserList();
     disableInput();
 
+
+
     var socket = new WebSocket(
         'ws://' + window.location.host +
         '/ws?session_key=${sessionKey}')
@@ -161,12 +164,17 @@ $(document).ready(function () {
     };
 
     socketYtdl.onmessage = e => {
-        console("onmessage")
-        ytTime = JSON.parse(e.data).ytTime
+
         video_id = JSON.parse(e.data).video_id
+        if (player.getVideoData()["video_id"] != video_id){
+            player.loadVideoById(video_id);
+        }
+
+        console.log("onmessage")
+        ytTime = JSON.parse(e.data).ytTime
+        console.log("yt time",ytTime)
         video_state = JSON.parse(e.data).video_state
         player.seekTo(ytTime, true)
-        player.loadVideoById(video_id)
         player.playVideo()
     }
 

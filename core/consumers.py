@@ -33,7 +33,7 @@ class YtdlConsumer(AsyncWebsocketConsumer):
         user = text_data_json["user"]
         reci = text_data_json['reci']
         ytTime = text_data_json["time"]
-        video_id = text_data_json['video_id']
+        video_id = text_data_json.get("video_id",None)
         video_state = text_data_json['video_state']
         if user >reci:
             group_name = user+reci
